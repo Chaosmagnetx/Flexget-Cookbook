@@ -1,0 +1,60 @@
+templates:
+  book:
+    rss: 
+      url: '<RSS Feed URL>'
+      all_entries: no
+    # Replace with your Downloader plugin
+    deluge:
+      path: 'D:\Downloading'
+      queuetotop: yes
+    accept_all: yes
+    no_entries_ok: yes
+  
+tasks:
+  book-tv:
+    priority: 1
+    # Set your download location and label acording to downloader plugin
+    set:
+      movedone: 'D:\TV\{{ series_name }}'
+      label: 'TV'
+    exists_series: 'D:\TV\{{ series_name }}'
+    metainfo_series: yes
+    tvmaze_lookup: yes
+    require_field:
+      - tvmaze_series_name
+    template: book
+
+  book-movie:
+    priority: 2
+    # Set your download location and label acording to downloader plugin
+    set:
+      main_file_only:  yes
+      keep_subs: yes
+      hide_sparse_files: no
+      movedone: 'D:\Movies'
+      label: 'Movies'
+    metainfo_movie: yes
+    imdb_lookup: yes
+    require_field:
+      - imdb_name
+    # For IMDB lookup issues failuers
+    if:
+      - imdb_name == None: reject
+    template: book
+      
+  book-other:
+    priority: 3
+    metainfo_series: yes
+    imdb_lookup: yes
+    tvmaze_lookup: yes
+    if:
+      - has_field('imdb_name'): 
+          # For IMDB lookup issues failuers
+          if:
+            - imdb_name != None: reject
+      - has_field('tvmaze_series_name'): reject
+    # Set your download location and label acording to downloader plugin
+    set:
+      movedone: 'D:\Other'
+      label: 'Bookmarks'
+    template: book
