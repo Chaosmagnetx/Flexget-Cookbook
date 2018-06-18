@@ -9,8 +9,7 @@ Replace ‘RSS Feed URL’ with your Feeds URL
 Change the downloader plugin (used here deluge) to your downloaders plugin, and change the set sections accordingly (may not be possible for all downloaders)
 Change the folder locations from ‘D:…’ to your setups.
 
-
-2)Move to Archive - TV shows and Movies
+2) Move to Archive - TV shows and Movies
 This will find all your tv shows and movies that are no longer listed in the Deluge torrent client and that were downloaded over a certain amount of days ago and will move the files and their subtitle files to a different folder (Any mounted drive or local cloud folder).
 
 This setup uses Deluge torrent downloader, you can change the collecting task old-deluge according to your input plugins requirements.
